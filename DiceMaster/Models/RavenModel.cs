@@ -1,5 +1,3 @@
-using System;
-
 namespace DiceMaster.Models
 {
     public class RavenModel

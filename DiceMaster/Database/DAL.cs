@@ -1,69 +1,70 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using DiceMaster.Models;
+using Raven.Client.Documents;
 
 namespace DiceMaster.Database
 {
     public class DAL : IDAL
     {
 
-        public T Get<T>(string id) where T : RavenModel
+        public async Task<T> Get<T>(string id) where T : RavenModel
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            using (var session = DocumentStoreHolder.Store.OpenAsyncSession())
             {
-                return session.Load<T>(id);
+                return await session.LoadAsync<T>(id);
             }
         }
 
-        public List<T> GetAll<T>() where T : RavenModel
+        public async Task<List<T>> GetAll<T>() where T : RavenModel
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            using (var session = DocumentStoreHolder.Store.OpenAsyncSession())
             {
-                return session.Query<T>().ToList();
+                
+                return await session.Query<T>().ToListAsync();
             }
         }
 
-        public T Update<T>(T obj) where T : RavenModel
+        public async Task<T> Update<T>(T obj) where T : RavenModel
         {
-            using(var session = DocumentStoreHolder.Store.OpenSession())
+            using(var session = DocumentStoreHolder.Store.OpenAsyncSession())
             {
-                var doc = session.Load<T>(obj.Id);
+                var doc = await session.LoadAsync<T>(obj.Id);
 
                 if(doc != null)
                 {
                     doc.Update(obj);
-                    session.SaveChanges();
+                    await session.SaveChangesAsync();
                 }
 
                 return doc;
             }
         }
 
-        public T Create<T>(T obj) where T : RavenModel
+        public async Task<T> Create<T>(T obj) where T : RavenModel
         {
-            using (var session = DocumentStoreHolder.Store.OpenSession())
+            using (var session = DocumentStoreHolder.Store.OpenAsyncSession())
             {
                 obj.Id = Guid.NewGuid().ToString();
 
-                session.Store(obj, obj.Id);
-                session.SaveChanges();
+                await session.StoreAsync(obj, obj.Id);
                 
                 return obj;
             }
         }
 
-        public T Delete<T>(string id) where T : RavenModel
+        public async Task<T> Delete<T>(string id) where T : RavenModel
         {
-            using(var session = DocumentStoreHolder.Store.OpenSession())
+            using(var session = DocumentStoreHolder.Store.OpenAsyncSession())
             {
-                var doc = session.Load<T>(id);
+                var doc = await session.LoadAsync<T>(id);
 
                 if (doc != null)
                 {
                     session.Delete(doc);
-                    session.SaveChanges();
+                    await session.SaveChangesAsync();
                 }
 
                 return doc;

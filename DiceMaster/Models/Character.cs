@@ -1,4 +1,3 @@
-
 namespace DiceMaster.Models 
 {
     public class Character : RavenModel

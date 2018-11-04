@@ -1,5 +1,6 @@
 using Raven.Client.Documents;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace DiceMaster.Database
 {
@@ -10,7 +11,8 @@ namespace DiceMaster.Database
             {
                 var store = new DocumentStore
                 {
-                    Urls = new[] { "http://localhost:8080" },
+                    Certificate = new X509Certificate2("D:\\Portfolio\\Certificates\\dicemaster.client.basic.certificate\\dicemaster.client.basic.certificate.pfx", "secure"),
+                    Urls = new[] { "https://a.dicemaster.ravendb.community:8600" },
                     Database = "DiceMaster"
                 };
 

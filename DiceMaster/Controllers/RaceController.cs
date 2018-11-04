@@ -7,26 +7,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DiceMaster.Controllers
 {
-    [Route("api/[controller]")]
-    public class ClassesController : Controller
+    [Route("api/races")]
+    public class RaceController : Controller
     {
         // GET api/values
         [HttpGet]
         public async Task<ActionResult> Get()
         {
-            return Ok(new Class[]
+            return Ok(new Race[]
             {
-                new Class()
+                new Race()
                 {
-                    Name = "Magus"
+                    Name = "Human"
                 },
-                new Class()
+                new Race()
                 {
-                    Name = "Barbarian"
+                    Name = "Dwarf"
                 },
-                new Class()
+                new Race()
                 {
-                    Name = "Druid"
+                    Name = "Elf"
                 }
             });
         }
@@ -35,22 +35,22 @@ namespace DiceMaster.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> Get(int id)
         {
-            return Ok(new Class()
+            return Ok(new Race()
             {
-                Name = "Magus"
+                Name = "Human"
             });
         }
 
         // POST api/values
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]Class value)
+        public async Task<ActionResult> Post([FromBody]Race value)
         {
             return BadRequest();
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
-        public async Task<ActionResult> Put(int id, [FromBody]Class value)
+        public async Task<ActionResult> Put(int id, [FromBody]Race value)
         {
             return BadRequest();
         }
