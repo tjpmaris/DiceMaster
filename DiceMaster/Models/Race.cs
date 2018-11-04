@@ -1,11 +1,6 @@
-namespace DiceMaster.Models {
-    public class Race {
-        public int Id { get; set; }
-        public string Name { get; set; }
-
-        public Race()
-        {
-            
-        }
+namespace DiceMaster.Models 
+{
+    public class Race : RavenModel 
+    {
     }
 }
